@@ -19,7 +19,7 @@ public class BookController {
     private final LibraryService libraryService;
     private final BookRepository bookRepository;
 
-    // crear prestamo
+    // crear libro
     @PostMapping
     public ResponseEntity<Book> createdBook(@RequestBody @Valid Book book) {
         Book saved = libraryService.registerBook(book);
