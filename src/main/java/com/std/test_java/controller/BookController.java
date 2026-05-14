@@ -2,6 +2,7 @@ package com.std.test_java.controller;
 
 
 import com.std.test_java.model.Book;
+import com.std.test_java.exception.ResourceNotFoundException;
 import com.std.test_java.repository.BookRepository;
 import com.std.test_java.service.LibraryService;
 import jakarta.validation.Valid;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/books")
@@ -36,7 +38,7 @@ public class BookController {
     @GetMapping("/{id}")
     public ResponseEntity<Book> getBookById(@PathVariable Long id) {
         Book book = bookRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("No se ha encontrado el libro de id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("No se ha encontrado el libro de id: " + id));
 
         return ResponseEntity.ok(book);
     }
@@ -45,6 +47,12 @@ public class BookController {
     @GetMapping("/search")
     public ResponseEntity<List<Book>> searchBooks(@RequestParam(name = "q", required = false) String keyword ) {
         return ResponseEntity.ok(libraryService.searchBooks(keyword));
+    }
+
+    // obtener estadísticas de la biblioteca
+    @GetMapping("/stats")
+    public ResponseEntity<Map<String, Object>> getLibraryStats() {
+        return ResponseEntity.ok(libraryService.getLibraryStats());
     }
 
     // eliminar libro

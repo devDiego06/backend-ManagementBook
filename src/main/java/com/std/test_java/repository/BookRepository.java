@@ -32,6 +32,5 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     long countByStatus(BookStatus status);
 
-    List<Book> findByTitleContainingIgnoreCaseOrAuthorContainingIgnoreCase(@NotBlank(message = "El título es obligatorio") String title, @NotBlank(message = "El autor es obligatorio") String author);
 
 }

@@ -22,9 +22,16 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
             "l.returnDate IS NULL")
     List<Loan> findOverdueLoans(@Param("today") LocalDate today);
 
+    //contamos prestamos vencidos (más eficiente)
+    @Query("SELECT COUNT(l) FROM Loan l WHERE " +
+            "l.dueDate < :today AND " +
+            "l.returnDate IS NULL")
+    long countOverdueLoans(@Param("today") LocalDate today);
+
     //verificar si un libro esta prestado
   //  boolean existByBookIdAndReturnDateIsNull(Long bookId);
 
+    @Deprecated // Usar countOverdueLoans() en su lugar
     List<Loan> findByDueDateBeforeAndReturnDateIsNull(LocalDate today);
 
     long countByReturnDateIsNull();
