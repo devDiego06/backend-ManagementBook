@@ -28,6 +28,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             "LOWER(b.author) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Book> searchByTitleOrAuthor(@Param("keyword") String keyword);
 
+    //verificar si el libro existe
     boolean existsByIsbn(String isbn);
 
     long countByStatus(BookStatus status);

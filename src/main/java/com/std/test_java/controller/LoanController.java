@@ -35,6 +35,12 @@ public class LoanController {
     private final LibraryService libraryService;
 
 
+    @GetMapping
+    public ResponseEntity<List<Loan>> getLoans() {
+        return ResponseEntity.ok(libraryService.searchLoan(null));
+    }
+
+
     ///crear prestamo
     @PostMapping
     public ResponseEntity<Loan> createLoan(@RequestBody @Valid LoanRequest loanRequest){

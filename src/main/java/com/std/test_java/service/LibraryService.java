@@ -84,6 +84,14 @@ public class LibraryService {
         return bookRepository.searchByTitleOrAuthor(keyword);
     }
 
+    //buscar prestamos
+    public List<Loan> searchLoan(String borrowerEmail){
+        if(borrowerEmail == null || borrowerEmail.isBlank()){
+            return loanRepository.findAll();
+        }
+        return loanRepository.findByBorrowerEmail(borrowerEmail);
+    }
+
     //obtener estadisticas
     public Map<String, Object> getLibraryStats() {
         long totalBooks = bookRepository.count();
